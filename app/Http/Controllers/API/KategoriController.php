@@ -3,35 +3,34 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\KategoriRequest;
+use App\Models\Kategori;
+use App\Http\Resources\KategoriResource;
 use Illuminate\Http\Request;
-use App\Models\Product;
-use App\Http\Resources\ProductCollection;
 use Illuminate\Http\Response;
-use App\Http\Resources\ProductResource;
 
-class ProductController extends Controller
+class KategoriController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::with('kategori')->latest()->paginate(10);
-        return response()->json(ProductResource::collection($products),
+        $kategoris = Kategori::latest()->paginate(10);
+        return response()->json(KategoriResource::collection($kategoris),
         Response::HTTP_OK);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductRequest $request)
+    public function store(KategoriRequest $request)
     {
-        $product = Product::create($request->validated());
+        $kategori = Kategori::create($request->validated());
         return response()->json([
             'status' => true,
-            'message' => 'Product created successfully',
-            'data' => new ProductResource($product),
+            'message' => 'Kategori created successfully',
+            'data' => new KategoriResource($kategori),
         ], Response::HTTP_CREATED);
     }
 
@@ -46,26 +45,25 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductRequest $request, Product $product)
+    public function update(KategoriRequest $request, Kategori $kategori)
     {
-        $product->update($request->validated());
+        $kategori->update($request->validated());
         return response()->json([
             'status' => true,
-            'message' => 'Product updated successfully',
-            'data' => new ProductResource($product),
+            'message' => 'Kategori updated successfully',
+            'data' => new KategoriResource($kategori),
         ], Response::HTTP_OK);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Kategori $kategori)
     {
-        $product->delete();
-
+        $kategori->delete();
         return response()->json([
             'status' => true,
-            'message' => 'Product deleted successfully',
+            'message' => 'Kategori deleted successfully',
         ], Response::HTTP_OK);
     }
 }
