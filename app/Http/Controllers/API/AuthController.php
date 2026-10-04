@@ -65,7 +65,7 @@ class AuthController extends Controller
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Invalid credentials',
+                    'message' => 'Email atau Password salah',
                 ], Response::HTTP_UNAUTHORIZED);
             }
         } catch (JWTException $e) {

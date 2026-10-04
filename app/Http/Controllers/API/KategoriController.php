@@ -16,7 +16,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $kategoris = Kategori::latest()->paginate(10);
+        $kategoris = Kategori::orderBy('id', 'asc')->latest()->paginate(10);
         return response()->json(KategoriResource::collection($kategoris),
         Response::HTTP_OK);
     }

@@ -38,9 +38,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return response()->json([
+            'status' => true,
+            'message' => 'Product detail',
+            'data' => new ProductResource($product),
+        ], Response::HTTP_OK);
     }
 
     /**
